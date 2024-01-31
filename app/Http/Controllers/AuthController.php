@@ -13,6 +13,12 @@ class AuthController extends Controller
     {
 
         $user = new User();
+        $checkEmail = $user->where('email', $request->email)->first();
+        if($checkEmail){
+            return response()->json([
+                'message' => 'User already exists'
+            ], 201);
+        }
 
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
