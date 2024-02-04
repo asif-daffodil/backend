@@ -47,12 +47,11 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
 
             return response()->json([
-                'message' => 'Bad creds'
+                'message' => 'Invalid credentials'
             ], 401);
         }
-
+        $user->load('preaplication');
         $token = $user->createToken('auth_token')->plainTextToken;
-
         $cookie = cookie('jwt', $token, 60 * 24); // 1 day
 
         return response()->json([
@@ -64,8 +63,9 @@ class AuthController extends Controller
 
     public function user()
     {
+        $user = auth()->user()->load('preaplication');
         return response()->json([
-            'user' => auth()->user()
+            'user' => $user,
         ]);
     }
 

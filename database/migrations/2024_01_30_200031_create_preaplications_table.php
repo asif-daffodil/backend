@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum("russain_citizen", ["Yes", "No"]);
             $table->enum("permanent_resident", ["Yes", "No"])->default("No");
             $table->string("location");
+            $table->string("application_status")->default("Pending");
             $table->timestamps();
         });
     }

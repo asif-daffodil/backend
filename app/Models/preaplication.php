@@ -15,4 +15,9 @@ class preaplication extends Model
         'permanent_resident',
         'location',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
