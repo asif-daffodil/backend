@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -25,6 +26,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 Route::middleware('auth:sanctum')->post('/updateFirstPart', [AuthController::class, 'updateFirstPart']);
-
 Route::middleware('auth:sanctum')->get('/checkpreaplication', [PreaplicationController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/preaplication', [PreaplicationController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/new-application', [ApplicationController::class, 'store']);
