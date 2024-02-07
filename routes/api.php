@@ -34,3 +34,7 @@ Route::middleware('auth:sanctum')->post('/upload', [ApplicationController::class
 Route::middleware('auth:sanctum')->post('/update-payment', [ApplicationController::class, 'updatePayment']);
 
 Route::middleware('AdminMiddleware')->get('/get-pre-applicant/{page}/{limit}', [AdminController::class, 'get_pre_applicant']);
+Route::middleware('AdminMiddleware')->post('/approve-pre-applicant/{id}/{status}', [AdminController::class, 'approve_pre_applicant']);
+Route::middleware('AdminMiddleware')->get('/waiting-applicant/{page}/{limit}', [AdminController::class, 'waiting_applicant']);
+Route::middleware('AdminMiddleware')->get('/get-applicant/{page}/{limit}', [AdminController::class, 'get_applicant']);
+Route::middleware('AdminMiddleware')->post('/approve-applicant/{id}/{status}', [AdminController::class, 'approve_applicant']);
