@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('passport')->nullable();
             $table->string('photo')->nullable();
             $table->string('application_status')->default('Pending');
+            $table->string('transection_details')->nullable();
+            $table->string('screenshot')->nullable();
             $table->timestamps();
         });
     }
