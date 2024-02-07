@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ApplicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\PreaplicationController;
 
 /*
@@ -30,3 +31,6 @@ Route::middleware('auth:sanctum')->get('/checkpreaplication', [PreaplicationCont
 Route::middleware('auth:sanctum')->post('/preaplication', [PreaplicationController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/new-application', [ApplicationController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/upload', [ApplicationController::class, 'update']);
+Route::middleware('auth:sanctum')->post('/update-payment', [ApplicationController::class, 'updatePayment']);
+
+Route::middleware('AdminMiddleware')->get('/get-pre-applicant/{page}/{limit}', [AdminController::class, 'get_pre_applicant']);

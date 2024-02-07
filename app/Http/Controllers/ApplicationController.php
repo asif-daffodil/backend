@@ -61,6 +61,26 @@ class ApplicationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    public function updatePayment (Request $request)
+    {
+        $request->validate([
+            'transection_details' => 'required',
+            'screenshot' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048'
+        ]);
+
+        $application = application::where('user_id', auth()->user()->id)->first();
+
+        $application->transection_details = $request->transection_details;
+        $application->screenshot = $request->file('screenshot')->store('documents');
+
+        $application->save();
+
+        return response()->json([
+            'message' => 'Payment details successfully uploaded',
+            'application' => $application
+        ], Response::HTTP_CREATED);
+    }
+
     /**
      * Display the specified resource.
      */
