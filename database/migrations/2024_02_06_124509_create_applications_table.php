@@ -18,6 +18,11 @@ return new class extends Migration
             $table->string('russain_citizen');
             $table->string('permanent_resident');
             $table->bigInteger('user_id')->foreignKey('user_id')->references('id')->on('users');
+            $table->string('ssc')->nullable();
+            $table->string('hsc')->nullable();
+            $table->string('passport')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('application_status')->default('Pending');
             $table->timestamps();
         });
     }

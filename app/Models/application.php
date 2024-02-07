@@ -13,6 +13,11 @@ class application extends Model
         'applicationType',
         'highSchool',
         'russain_citizen',
-        'permanent_resident'
+        'permanent_resident',
+        'user_id',
+        'ssc',
+        'hsc',
+        'passport',
+        'photo',
     ];
 }

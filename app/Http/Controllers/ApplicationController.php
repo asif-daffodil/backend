@@ -82,7 +82,26 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, application $application)
     {
-        //
+        $request->validate([
+            'ssc' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048',
+            'hsc' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048',
+            'passport' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048',
+            'photo' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048'
+        ]);
+
+        $application = application::where('user_id', auth()->user()->id)->first();
+
+        $application->ssc = $request->file('ssc')->store('documents');
+        $application->hsc = $request->file('hsc')->store('documents');
+        $application->passport = $request->file('passport')->store('documents');
+        $application->photo = $request->file('photo')->store('documents');
+
+        $application->save();
+
+        return response()->json([
+            'message' => 'Documents successfully uploaded',
+            'application' => $application
+        ], Response::HTTP_CREATED);
     }
 
     /**

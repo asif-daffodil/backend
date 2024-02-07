@@ -29,3 +29,4 @@ Route::middleware('auth:sanctum')->post('/updateFirstPart', [AuthController::cla
 Route::middleware('auth:sanctum')->get('/checkpreaplication', [PreaplicationController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/preaplication', [PreaplicationController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/new-application', [ApplicationController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/upload', [ApplicationController::class, 'update']);
