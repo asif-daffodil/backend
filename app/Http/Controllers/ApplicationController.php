@@ -111,10 +111,10 @@ class ApplicationController extends Controller
 
         $application = application::where('user_id', auth()->user()->id)->first();
 
-        $application->ssc = $request->file('ssc')->store('documents');
-        $application->hsc = $request->file('hsc')->store('documents');
-        $application->passport = $request->file('passport')->store('documents');
-        $application->photo = $request->file('photo')->store('documents');
+        $application->ssc = $request->file('ssc')->store('public');
+        $application->hsc = $request->file('hsc')->store('public');
+        $application->passport = $request->file('passport')->store('public');
+        $application->photo = $request->file('photo')->store('public');
 
         $application->save();
 
