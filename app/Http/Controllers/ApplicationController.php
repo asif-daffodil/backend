@@ -61,7 +61,7 @@ class ApplicationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function updatePayment (Request $request)
+    public function updatePayment(Request $request)
     {
         $request->validate([
             'transection_details' => 'required',
@@ -71,7 +71,8 @@ class ApplicationController extends Controller
         $application = application::where('user_id', auth()->user()->id)->first();
 
         $application->transection_details = $request->transection_details;
-        $application->screenshot = $request->file('screenshot')->store('documents');
+        $application->screenshot = $request->file('screenshot')->store('public');
+        $application->screenshot = basename($application->screenshot);
 
         $application->save();
 
@@ -112,9 +113,16 @@ class ApplicationController extends Controller
         $application = application::where('user_id', auth()->user()->id)->first();
 
         $application->ssc = $request->file('ssc')->store('public');
+        $application->ssc = basename($application->ssc);
+
         $application->hsc = $request->file('hsc')->store('public');
+        $application->hsc = basename($application->hsc);
+
         $application->passport = $request->file('passport')->store('public');
+        $application->passport = basename($application->passport);
+
         $application->photo = $request->file('photo')->store('public');
+        $application->photo = basename($application->photo);
 
         $application->save();
 
@@ -130,5 +138,12 @@ class ApplicationController extends Controller
     public function destroy(application $application)
     {
         //
+    }
+
+    public function get_individual_application()
+    {
+        $id = auth()->user()->id;
+        $application = application::where('user_id', $id)->first();
+        return response()->json($application);
     }
 }
