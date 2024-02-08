@@ -27,9 +27,7 @@ jobs:
     - name: Generate storage link
       run: php artisan storage:link
     - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
+      run: php artisan migrate
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
