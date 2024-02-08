@@ -37,9 +37,11 @@ jobs:
         DB_USERNAME: smubdorg_smu
         DB_PASSWORD: -n.Z8qdKB030Ww
       run: vendor/bin/phpunit
-      with:
+    - name: 📂 Sync files
+        uses: smubdorg/FTP-Deploy-Action@4.0.0
+        with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /
+          server-dir: /home/smubdorg/api
       
