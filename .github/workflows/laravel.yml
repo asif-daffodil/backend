@@ -37,7 +37,7 @@ jobs:
         DB_USERNAME: smubdorg_smu
         DB_PASSWORD: -n.Z8qdKB030Ww
       run: vendor/bin/phpunit
-    with:
+      with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
