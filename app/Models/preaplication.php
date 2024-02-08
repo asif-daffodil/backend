@@ -14,6 +14,7 @@ class preaplication extends Model
         'russain_citizen',
         'permanent_resident',
         'location',
+        'application_status'
     ];
 
     protected $with = ['user'];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\application;
+use App\Models\preaplication;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -52,6 +53,12 @@ class ApplicationController extends Controller
         $application->highSchool = $request->highSchool;
         $application->russain_citizen = $request->russain_citizen;
         $application->permanent_resident = $request->permanent_resident;
+        
+        // update preapplication application_status to Applied
+        $preaplication = preaplication::where('user_id', auth()->user()->id)->first();
+        $preaplication->application_status = 'Applied';
+        $preaplication->save();
+
 
         $application->save();
 
@@ -73,6 +80,12 @@ class ApplicationController extends Controller
         $application->transection_details = $request->transection_details;
         $application->screenshot = $request->file('screenshot')->store('public');
         $application->screenshot = basename($application->screenshot);
+
+        // update preapplication application_status to Paid
+        $preaplication = preaplication::where('user_id', auth()->user()->id)->first();
+        $preaplication->application_status = 'Paid';
+
+        $preaplication->save();
 
         $application->save();
 
