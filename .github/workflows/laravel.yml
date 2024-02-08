@@ -25,7 +25,7 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Generate storage link
-        run: php artisan storage:link
+      run: php artisan storage:link
     - name: Create Database
       run: |
         mkdir -p database
