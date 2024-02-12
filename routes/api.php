@@ -44,3 +44,4 @@ Route::middleware('AdminMiddleware')->get('/get-individual-applicant/{id}', [Adm
 Route::middleware('AdminMiddleware')->get('/get-approved-applicant/{page}/{limit}', [AdminController::class, 'get_approved_applicant']);
 // PaidApplicants
 Route::middleware('AdminMiddleware')->get('/get-paid-applicant/{page}/{limit}', [AdminController::class, 'get_paid_applicant']);
+Route::middleware('AdminMiddleware')->get('/get_all_paid_applicant', [AdminController::class, 'get_all_paid_applicant']);

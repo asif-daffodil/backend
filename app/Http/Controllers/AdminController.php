@@ -82,4 +82,17 @@ class AdminController extends Controller
         $pre_applicant = Preaplication::find($id);
         return response()->json($pre_applicant);
     }
+
+    public function get_all_paid_applicant()
+    {
+        // application_status are Paid for both tables applicant and preapplicant
+        $paid_applicant = Preaplication::where('application_status', 'Paid')->where('user_id', function ($query) {
+            $query->select('user_id')->from('applications')->where('application_status', 'Paid');
+        })->get();
+
+        return response()->json([
+            'message' => 'All Paid Students',
+            'data' => $paid_applicant
+        ], 200);
+    }
 }
