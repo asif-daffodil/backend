@@ -39,16 +39,16 @@ class User extends Authenticatable
      * @var array<string, string>
      */
 
-    
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
+    protected $with = ['preaplication'];
+
     public function preaplication()
     {
         return $this->hasMany(Preaplication::class);
     }
-
-
 }

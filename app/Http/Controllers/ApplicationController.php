@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\application;
-use App\Models\preaplication;
+use App\Models\Application;
+use App\Models\Preaplication;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -38,9 +38,9 @@ class ApplicationController extends Controller
             'permanent_resident' => 'required'
         ]);
 
-        $application = new application();
+        $application = new Application();
 
-        $checkApplication = application::where('user_id', auth()->user()->id)->first();
+        $checkApplication = Application::where('user_id', auth()->user()->id)->first();
 
         if ($checkApplication) {
             return response()->json([
@@ -53,9 +53,9 @@ class ApplicationController extends Controller
         $application->highSchool = $request->highSchool;
         $application->russain_citizen = $request->russain_citizen;
         $application->permanent_resident = $request->permanent_resident;
-        
+
         // update preapplication application_status to Applied
-        $preaplication = preaplication::where('user_id', auth()->user()->id)->first();
+        $preaplication = Preaplication::where('user_id', auth()->user()->id)->first();
         $preaplication->application_status = 'Applied';
         $preaplication->save();
 
@@ -75,14 +75,14 @@ class ApplicationController extends Controller
             'screenshot' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048'
         ]);
 
-        $application = application::where('user_id', auth()->user()->id)->first();
+        $application = Application::where('user_id', auth()->user()->id)->first();
 
         $application->transection_details = $request->transection_details;
         $application->screenshot = $request->file('screenshot')->store('public');
         $application->screenshot = basename($application->screenshot);
 
         // update preapplication application_status to Paid
-        $preaplication = preaplication::where('user_id', auth()->user()->id)->first();
+        $preaplication = Preaplication::where('user_id', auth()->user()->id)->first();
         $preaplication->application_status = 'Paid';
 
         $preaplication->save();
@@ -95,26 +95,7 @@ class ApplicationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(application $application)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(application $application)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, application $application)
+    public function update(Request $request, Application $application)
     {
         $request->validate([
             'ssc' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048',
@@ -123,7 +104,7 @@ class ApplicationController extends Controller
             'photo' => 'required | mimes:jpeg,png,jpg,gif,bmp | max:2048'
         ]);
 
-        $application = application::where('user_id', auth()->user()->id)->first();
+        $application = Application::where('user_id', auth()->user()->id)->first();
 
         $application->ssc = $request->file('ssc')->store('public');
         $application->ssc = basename($application->ssc);
@@ -143,14 +124,6 @@ class ApplicationController extends Controller
             'message' => 'Documents successfully uploaded',
             'application' => $application
         ], Response::HTTP_CREATED);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(application $application)
-    {
-        //
     }
 
     public function get_individual_application()
