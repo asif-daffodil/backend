@@ -58,12 +58,12 @@ class AuthController extends Controller
             'message' => 'User successfully logged in',
             'user' => $user,
             'token' => $token
-        ], 201)->withCookie($cookie);
+        ], 201);
     }
 
     public function user()
     {
-        $user = auth()->user()->load('preaplication');
+        $user = auth()->user();
         return response()->json([
             'user' => $user,
         ]);
@@ -71,11 +71,10 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $cookie = Cookie::forget('jwt');
 
         return response()->json([
             'message' => 'User successfully logged out'
-        ])->withCookie($cookie);
+        ]);
     }
 
     public function updateFirstPart()
