@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -50,8 +49,8 @@ class AuthController extends Controller
                 'message' => 'Invalid credentials'
             ], 401);
         }
-        $user->load('preaplication');
-        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $token = $user->createToken('token')->plainTextToken;
 
         return response()->json([
             'message' => 'User successfully logged in',

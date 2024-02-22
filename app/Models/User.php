@@ -45,9 +45,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['preaplication'];
+    protected $with = ['Preaplication'];
 
-    public function preaplication()
+    public function Preaplication()
     {
         return $this->hasMany(Preaplication::class);
     }

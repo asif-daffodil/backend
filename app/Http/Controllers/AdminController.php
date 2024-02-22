@@ -8,9 +8,9 @@ use App\Models\Application;
 
 class AdminController extends Controller
 {
-    public function get_pre_applicant($page, $limit)
+public function get_pre_applicant($page, $limit)
     {
-        $pre_applicant = Preaplication::where('application_status', 'Pending')->paginate($limit, ['*'], 'page', $page);
+        $pre_applicant = Preaplication::where('application_status', '=', 'Pending')->paginate($limit, ['*'], 'page', $page)->load('user');
         return response()->json($pre_applicant);
     }
 
@@ -32,14 +32,14 @@ class AdminController extends Controller
         // slect from preapplication where application_status = 'Approved' and user_id not in application
         $waiting_applicant = Preaplication::where('application_status', 'Approved')->whereNotIn('user_id', function ($query) {
             $query->select('user_id')->from('applications');
-        })->paginate($limit, ['*'], 'page', $page);
+        })->paginate($limit, ['*'], 'page', $page)->load('user');
 
         return response()->json($waiting_applicant);
     }
 
     public function get_applicant($page, $limit)
     {
-        $pre_applicant = Application::where('application_status', 'Pending')->paginate($limit, ['*'], 'page', $page);
+        $pre_applicant = Application::where('application_status', 'Pending')->paginate($limit, ['*'], 'page', $page)->load('user');
         return response()->json($pre_applicant);
     }
 
@@ -61,25 +61,25 @@ class AdminController extends Controller
 
     public function get_individual_applicant($id)
     {
-        $applicant = Application::find($id);
+        $applicant = Application::find($id)->load('user');
         return response()->json($applicant);
     }
 
     public function get_approved_applicant($page, $limit)
     {
-        $approved_applicant = Application::where('application_status', 'Approved')->paginate($limit, ['*'], 'page', $page);
+        $approved_applicant = Application::where('application_status', 'Approved')->paginate($limit, ['*'], 'page', $page)->load('user');
         return response()->json($approved_applicant);
     }
 
     public function get_paid_applicant($page, $limit)
     {
-        $paid_applicant = Application::where('application_status', 'Paid')->paginate($limit, ['*'], 'page', $page);
+        $paid_applicant = Application::where('application_status', 'Paid')->paginate($limit, ['*'], 'page', $page)->load('user');
         return response()->json($paid_applicant);
     }
 
     public function get_individual_pre_applicant($id)
     {
-        $pre_applicant = Preaplication::find($id);
+        $pre_applicant = Preaplication::find($id)->load('user');
         return response()->json($pre_applicant);
     }
 
@@ -88,7 +88,7 @@ class AdminController extends Controller
         // application_status are Paid for both tables applicant and preapplicant
         $paid_applicant = Preaplication::where('application_status', 'Paid')->where('user_id', function ($query) {
             $query->select('user_id')->from('applications')->where('application_status', 'Paid');
-        })->get();
+        })->get()->load('user');
 
         return response()->json([
             'message' => 'All Paid Students',

@@ -18,7 +18,7 @@ use App\Http\Controllers\PreaplicationController;
 |
 */
 
-Route::group(['middleware' => 'cors'], function () {
+
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         return $request->user();
     });
@@ -45,4 +45,4 @@ Route::group(['middleware' => 'cors'], function () {
     // PaidApplicants
     Route::middleware('AdminMiddleware')->get('/get-paid-applicant/{page}/{limit}', [AdminController::class, 'get_paid_applicant']);
     Route::middleware('AdminMiddleware')->get('/get_all_paid_applicant', [AdminController::class, 'get_all_paid_applicant']);
-});
+

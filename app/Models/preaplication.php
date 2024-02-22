@@ -17,9 +17,7 @@ class Preaplication extends Model
         'application_status'
     ];
 
-    protected $with = ['user'];
-
-    public function user()
+    public function User()
     {
         return $this->belongsTo(User::class);
     }

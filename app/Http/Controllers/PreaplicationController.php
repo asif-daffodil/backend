@@ -11,7 +11,7 @@ class PreaplicationController extends Controller
     public function index()
     {
 
-        $checkApplication = Preaplication::where('user_id', auth()->user()->id)->get();
+        $checkApplication = Preaplication::where('user_id', auth()->user()->id)->get()->load('user');
         return response()->json($checkApplication, 201);
     }
 
