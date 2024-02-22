@@ -14,7 +14,7 @@ class AuthController extends Controller
 
         $user = new User();
         $checkEmail = $user->where('email', $request->email)->first();
-        if($checkEmail){
+        if ($checkEmail) {
             return response()->json([
                 'message' => 'User already exists'
             ], 201);
@@ -52,7 +52,6 @@ class AuthController extends Controller
         }
         $user->load('preaplication');
         $token = $user->createToken('auth_token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
 
         return response()->json([
             'message' => 'User successfully logged in',

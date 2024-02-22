@@ -18,30 +18,31 @@ use App\Http\Controllers\PreaplicationController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'cors'], function () {
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
+    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+    Route::middleware('auth:sanctum')->post('/updateFirstPart', [AuthController::class, 'updateFirstPart']);
+    Route::middleware('auth:sanctum')->get('/checkpreaplication', [PreaplicationController::class, 'index']);
+    Route::middleware('auth:sanctum')->post('/preaplication', [PreaplicationController::class, 'store']);
+    Route::middleware('auth:sanctum')->post('/new-application', [ApplicationController::class, 'store']);
+    Route::middleware('auth:sanctum')->post('/upload', [ApplicationController::class, 'update']);
+    Route::middleware('auth:sanctum')->post('/update-payment', [ApplicationController::class, 'updatePayment']);
+    Route::middleware('auth:sanctum')->get('/get_individual_pre_applicant/{id}', [AdminController::class, 'get_individual_pre_applicant']);
+    Route::middleware('auth:sanctum')->get('/get_individual_application', [ApplicationController::class, 'get_individual_application']);
+
+    Route::middleware('AdminMiddleware')->get('/get-pre-applicant/{page}/{limit}', [AdminController::class, 'get_pre_applicant']);
+    Route::middleware('AdminMiddleware')->post('/approve-pre-applicant/{id}/{status}', [AdminController::class, 'approve_pre_applicant']);
+    Route::middleware('AdminMiddleware')->get('/waiting-applicant/{page}/{limit}', [AdminController::class, 'waiting_applicant']);
+    Route::middleware('AdminMiddleware')->get('/get-applicant/{page}/{limit}', [AdminController::class, 'get_applicant']);
+    Route::middleware('AdminMiddleware')->post('/approve-applicant/{id}/{status}', [AdminController::class, 'approve_applicant']);
+    Route::middleware('AdminMiddleware')->get('/get-individual-applicant/{id}', [AdminController::class, 'get_individual_applicant']);
+    Route::middleware('AdminMiddleware')->get('/get-approved-applicant/{page}/{limit}', [AdminController::class, 'get_approved_applicant']);
+    // PaidApplicants
+    Route::middleware('AdminMiddleware')->get('/get-paid-applicant/{page}/{limit}', [AdminController::class, 'get_paid_applicant']);
+    Route::middleware('AdminMiddleware')->get('/get_all_paid_applicant', [AdminController::class, 'get_all_paid_applicant']);
 });
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
-Route::middleware('auth:sanctum')->post('/updateFirstPart', [AuthController::class, 'updateFirstPart']);
-Route::middleware('auth:sanctum')->get('/checkpreaplication', [PreaplicationController::class, 'index']);
-Route::middleware('auth:sanctum')->post('/preaplication', [PreaplicationController::class, 'store']);
-Route::middleware('auth:sanctum')->post('/new-application', [ApplicationController::class, 'store']);
-Route::middleware('auth:sanctum')->post('/upload', [ApplicationController::class, 'update']);
-Route::middleware('auth:sanctum')->post('/update-payment', [ApplicationController::class, 'updatePayment']);
-Route::middleware('auth:sanctum')->get('/get_individual_pre_applicant/{id}', [AdminController::class, 'get_individual_pre_applicant']);
-Route::middleware('auth:sanctum')->get('/get_individual_application', [ApplicationController::class, 'get_individual_application']);
-
-Route::middleware('AdminMiddleware')->get('/get-pre-applicant/{page}/{limit}', [AdminController::class, 'get_pre_applicant']);
-Route::middleware('AdminMiddleware')->post('/approve-pre-applicant/{id}/{status}', [AdminController::class, 'approve_pre_applicant']);
-Route::middleware('AdminMiddleware')->get('/waiting-applicant/{page}/{limit}', [AdminController::class, 'waiting_applicant']);
-Route::middleware('AdminMiddleware')->get('/get-applicant/{page}/{limit}', [AdminController::class, 'get_applicant']);
-Route::middleware('AdminMiddleware')->post('/approve-applicant/{id}/{status}', [AdminController::class, 'approve_applicant']);
-Route::middleware('AdminMiddleware')->get('/get-individual-applicant/{id}', [AdminController::class, 'get_individual_applicant']);
-Route::middleware('AdminMiddleware')->get('/get-approved-applicant/{page}/{limit}', [AdminController::class, 'get_approved_applicant']);
-// PaidApplicants
-Route::middleware('AdminMiddleware')->get('/get-paid-applicant/{page}/{limit}', [AdminController::class, 'get_paid_applicant']);
-Route::middleware('AdminMiddleware')->get('/get_all_paid_applicant', [AdminController::class, 'get_all_paid_applicant']);
