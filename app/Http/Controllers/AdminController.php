@@ -8,7 +8,7 @@ use App\Models\Application;
 
 class AdminController extends Controller
 {
-public function get_pre_applicant($page, $limit)
+    public function get_pre_applicant($page, $limit)
     {
         $pre_applicant = Preaplication::where('application_status', '=', 'Pending')->paginate($limit, ['*'], 'page', $page)->load('user');
         return response()->json($pre_applicant);
@@ -85,14 +85,14 @@ public function get_pre_applicant($page, $limit)
 
     public function get_all_paid_applicant()
     {
-        // application_status are Paid for both tables applicant and preapplicant
-        $paid_applicant = Preaplication::where('application_status', 'Paid')->where('user_id', function ($query) {
-            $query->select('user_id')->from('applications')->where('application_status', 'Paid');
-        })->get()->load('user');
+        // Retrieve all applicants with 'Paid' application status
+        $paid_applicants = Preaplication::where('application_status', 'Paid')
+            ->with(['user'])
+            ->get();
 
         return response()->json([
             'message' => 'All Paid Students',
-            'data' => $paid_applicant
+            'data' => $paid_applicants
         ], 200);
     }
 }

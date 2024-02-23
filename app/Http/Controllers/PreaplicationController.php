@@ -12,7 +12,7 @@ class PreaplicationController extends Controller
     {
 
         $checkApplication = Preaplication::where('user_id', auth()->user()->id)->get()->load('user');
-        return response()->json($checkApplication, 201);
+        return response()->json($checkApplication, 200);
     }
 
     public function store(Request $request)

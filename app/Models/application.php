@@ -21,8 +21,6 @@ class Application extends Model
         'photo',
     ];
 
-    protected $with = ['User'];
-
     public function User()
     {
         return $this->belongsTo(User::class);
